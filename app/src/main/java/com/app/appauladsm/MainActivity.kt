@@ -14,7 +14,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -82,8 +85,12 @@ fun App(viewModel: PessoaVieweModel, mainActivity: MainActivity){
         nome,
         telefone
     )
-    val pessoaList by remember {
+    var pessoaList by remember {
         mutableStateOf(listOf<Pessoa>())
+    }
+
+    viewModel.getPessoa().observe(mainActivity){
+        pessoaList = it
     }
 
     Column(
@@ -140,7 +147,7 @@ fun App(viewModel: PessoaVieweModel, mainActivity: MainActivity){
                     value = nome,
                     onValueChange = { nome = it },
                     label = {  },
-                    modifier = Modifier.height(15.dp)
+                    modifier = Modifier.height(15.dp).background(Color.DarkGray)
                 )
             }
         }
@@ -175,7 +182,7 @@ fun App(viewModel: PessoaVieweModel, mainActivity: MainActivity){
                     value = telefone,
                     onValueChange = { telefone = it },
                     label = {  },
-                    modifier = Modifier.height(15.dp)
+                    modifier = Modifier.height(15.dp).background(Color.DarkGray)
                 )
             }
         }
@@ -204,6 +211,52 @@ fun App(viewModel: PessoaVieweModel, mainActivity: MainActivity){
                     fontSize = 16.sp,
                     color = Color.White
                 )
+            }
+        }
+        Divider()
+        Row(
+            Modifier
+                .padding(20.dp)
+
+        ){
+
+        }
+        Row(
+            Modifier.fillMaxWidth(),
+            Arrangement.Center
+        ){
+            Column (
+                Modifier.fillMaxWidth(0.5f),
+                Arrangement.Center
+            ){
+                Text(text = "Nome", color = Color.White)
+            }
+            Column (
+                Modifier.fillMaxWidth(0.5f),
+                Arrangement.Center
+            ) {
+                Text(text = "Telefone", color = Color.White)
+            }
+        }
+        LazyColumn {
+            items(pessoaList) { pessoa ->
+                Row(
+                    Modifier.fillMaxWidth(),
+                    Arrangement.Center
+                ){
+                    Column (
+                        Modifier.fillMaxWidth(0.5f),
+                        Arrangement.Center
+                    ){
+                        Text(text = "${pessoa.nome}", color = Color.White)
+                    }
+                    Column (
+                        Modifier.fillMaxWidth(0.5f),
+                        Arrangement.Center
+                    ) {
+                        Text(text = "${pessoa.telefone}", color = Color.White)
+                    }
+                }
             }
         }
 
