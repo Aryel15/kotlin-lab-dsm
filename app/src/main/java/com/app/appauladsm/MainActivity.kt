@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -241,12 +242,15 @@ fun App(viewModel: PessoaVieweModel, mainActivity: MainActivity){
         LazyColumn {
             items(pessoaList) { pessoa ->
                 Row(
-                    Modifier.fillMaxWidth(),
-                    Arrangement.Center
+                    Modifier.fillMaxWidth().clickable {
+                      viewModel.deletePessoa(pessoa)
+                    },
+                    Arrangement.Center,
                 ){
                     Column (
-                        Modifier.fillMaxWidth(0.5f),
-                        Arrangement.Center
+                        Modifier.fillMaxWidth(0.5f).padding(0.dp, 0.dp, 20.dp, 0.dp),
+                        Arrangement.Center,
+
                     ){
                         Text(text = "${pessoa.nome}", color = Color.White)
                     }
@@ -256,6 +260,7 @@ fun App(viewModel: PessoaVieweModel, mainActivity: MainActivity){
                     ) {
                         Text(text = "${pessoa.telefone}", color = Color.White)
                     }
+
                 }
             }
         }

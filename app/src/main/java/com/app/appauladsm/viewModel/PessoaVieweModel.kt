@@ -14,4 +14,10 @@ class PessoaVieweModel(private val repository: Repository): ViewModel() {
             repository.upsertPessoa(pessoa)
         }
     }
+
+    fun deletePessoa(pessoa: Pessoa) {
+        viewModelScope.launch {
+            repository.deletePessoa(pessoa)
+        }
+    }
 }
